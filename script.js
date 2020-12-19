@@ -7,7 +7,8 @@ $("#search-button").on("click", function(){
     var searchInput = $("#search-input").val()
     console.log(searchInput)
 
-    var newButton = $("<button>").text(searchInput);
+    var newButton = $("<button>").addClass("btn")
+    newButton.addClass("btn-secondary").text(searchInput);
     $("#past-search-buttons").prepend(newButton);
 
     var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + searchInput + "&appid=f4aa00bd0357d60904e18da5d680e490&units=imperial";
@@ -30,6 +31,8 @@ $("#search-button").on("click", function(){
         card.append(cardBody);
         $(".jumbotron").append(card);
     })
+
+    $(".jumbotron").empty();
 
     var queryURL2 = "https://api.openweathermap.org/data/2.5/forecast?q=" + searchInput + "&appid=f4aa00bd0357d60904e18da5d680e490&units=imperial"
     $.ajax({
@@ -55,6 +58,8 @@ $("#search-button").on("click", function(){
         }
     })
 
+    $("#upcoming-display").empty();
+
     var queryURL3 = "https://api.openweathermap.org/data/2.5/uvi?lat=47.61&lon=-122.33&appid=f4aa00bd0357d60904e18da5d680e490"
     $.ajax({
         url: queryURL3,
@@ -64,9 +69,9 @@ $("#search-button").on("click", function(){
         // console.log(response);
         var uvIndex = $("<p>").addClass("card-text").text("UV Index: " + response.value);
         $(".card-body").append(uvIndex);
-    })
+    });
 
-})
+});
 
 // 2 more ajax calls, uv index & 5 day forecast
 // uv index call done based on lattitude/longtitude. Use starting poit(Seattle) to get reference for lat/long

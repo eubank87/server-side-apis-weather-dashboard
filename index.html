@@ -17,20 +17,22 @@
 
   <div class="container">
     <div class="row">
-      <div id="search-area" class="col-md-3">
+      <aside id="search-area" class="col-md-3 bg-light py-2 vh-100">
         <h5>What's the weather like in...</h5>
-        <input id="search-input" type="text" placeholder="city name">
-        <button id="search-button">Search</button>
+        <form id="search-form" class="form-inline">
+          <input id="search-input" type="text" placeholder="city name">
+          <button id="search-button" class="btn btn-secondary">Search</button>
+        </form>
         <div id="past-search-buttons"></div>
-      </div>
-      <div id="full-weather-display" class="col-md-9">
+      </aside>
+      <main id="full-weather-display" class="col-md-9">
         <div id="today-display" class="row">
           <div class="col-md-12">
             <div class="jumbotron"></div>
           </div>
         </div>
         <div id="upcoming-display" class="row"></div>
-      </div>
+      </main>
     </div>
   </div>
 
