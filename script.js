@@ -6,8 +6,9 @@ $("#search-button").on("click", function(){
     event.preventDefault()
     var searchInput = $("#search-input").val()
     console.log(searchInput)
-    // var newButton = $("<button>")
 
+    var newButton = $("<button>").text(searchInput);
+    $("#past-search-buttons").prepend(newButton);
 
     var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + searchInput + "&appid=f4aa00bd0357d60904e18da5d680e490&units=imperial";
     $.ajax({
