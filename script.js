@@ -2,18 +2,14 @@
 // var queryURL = "https://api.openweathermap.org/data/2.5/forecast/daily?q=" + searchInput + "&cnt=6&appid=f4aa00bd0357d60904e18da5d680e490&units=imperial"
 
 $("#search-button").on("click", function(){
-    console.log(this);
+    // console.log(this);
     event.preventDefault()
     var searchInput = $("#search-input").val()
     console.log(searchInput)
+    // var newButton = $("<button>")
 
-    // when I click the search button the ajax call is fired and searches for the value of the input submitted by the user
 
-    // and upcoming 5 days are displayed on cards
-    // button is created under search area with stored info to call on again later
-})
-function searchWeather(){
-    var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=Seattle&appid=f4aa00bd0357d60904e18da5d680e490&units=imperial";
+    var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + searchInput + "&appid=f4aa00bd0357d60904e18da5d680e490&units=imperial";
     $.ajax({
         url: queryURL,
         method: "GET"
@@ -34,20 +30,23 @@ function searchWeather(){
         $(".jumbotron").append(card);
     })
 
-    var queryURL2 = "https://api.openweathermap.org/data/2.5/forecast?q=Seattle&appid=f4aa00bd0357d60904e18da5d680e490&units=imperial"
+    var queryURL2 = "https://api.openweathermap.org/data/2.5/forecast?q=" + searchInput + "&appid=f4aa00bd0357d60904e18da5d680e490&units=imperial"
     $.ajax({
         url: queryURL2,
         method: "GET"
     })
     .then(function(response){
-        // console.log(response);
+        console.log(response);
         for(var i = 0; i<response.list.length; i++){
             if(response.list[i].dt_txt.indexOf("12:00:00")!== -1){
                 var card = $("<div>").addClass("card");
+                var date = $("<h6>").addClass("card").text(response.list[i].dt_txt)
+                // var img = $("<img>").attr("src", "http://openweathermap.org/img/w/" + response.list[i].weather.icon + ".png");
                 var temp = $("<p>").addClass("card-text").text("Temp: " + response.list[i].main.temp + " F");
+                var humidity = $("<p>").addClass("card-text").text("Humidity: " + response.list[i].main.humidity + "%");
                 var cardBody = $("<div>").addClass("card-body");
                 var col = $("<div>").addClass("col-md-2");
-                cardBody.append(temp);
+                cardBody.append(date, temp, humidity);
                 card.append(cardBody);
                 col.append(card)
                 $("#upcoming-display").append(col);
@@ -61,13 +60,12 @@ function searchWeather(){
         method: "GET"
     })
     .then(function(response){
-        console.log(response);
+        // console.log(response);
         var uvIndex = $("<p>").addClass("card-text").text("UV Index: " + response.value);
         $(".card-body").append(uvIndex);
     })
 
-}
-searchWeather();
+})
 
 // 2 more ajax calls, uv index & 5 day forecast
 // uv index call done based on lattitude/longtitude. Use starting poit(Seattle) to get reference for lat/long
