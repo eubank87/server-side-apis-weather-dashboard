@@ -3,7 +3,21 @@
     font-size: 2rem;
 }
 
-/* #search-area{
+.card{
     background-color: rgb(219, 222, 224);
-    height: 100vh;
-} */
+    text-align: center;
+}
+
+.jumbotron{
+    background-color: transparent;
+}
+
+#upcoming-display{
+    display: flex;
+    justify-content: space-between;
+}
+
+.card2{
+    background-color: rgb(186, 149, 211);
+    text-align: center;
+}

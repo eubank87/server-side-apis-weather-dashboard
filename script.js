@@ -43,8 +43,8 @@ $("#search-button").on("click", function(){
         console.log(response);
         for(var i = 0; i<response.list.length; i++){
             if(response.list[i].dt_txt.indexOf("12:00:00")!== -1){
-                var card = $("<div>").addClass("card");
-                var date = $("<h6>").addClass("card").text(response.list[i].dt_txt)
+                var card = $("<div>").addClass("card2");
+                var date = $("<h6>").addClass("card2").text(response.list[i].dt_txt)
                 // var img = $("<img>").attr("src", "http://openweathermap.org/img/w/" + response.list[i].weather.icon + ".png");
                 var temp = $("<p>").addClass("card-text").text("Temp: " + response.list[i].main.temp + " F");
                 var humidity = $("<p>").addClass("card-text").text("Humidity: " + response.list[i].main.humidity + "%");
