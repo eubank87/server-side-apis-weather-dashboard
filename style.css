@@ -1,13 +1,16 @@
 .navbar-brand{
     margin: 0 auto;
     font-size: 2rem;
-    /* font-family: 'Luckiest Guy', cursive; */
 }
 *{
     font-family: 'Luckiest Guy', cursive;
 }
 button, input{
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Luckiest Guy', cursive;
+    font-size: 1.3rem;
+    letter-spacing: 0.4mm;
+    font-style: italic;
+    font-weight: lighter;
 }
 
 body{
@@ -16,22 +19,25 @@ body{
 
 aside{
     background-color: rgba(255, 255, 255, 0.836);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
 }
-/* h5{
-    font-family: 'Luckiest Guy', cursive;
-} */
+
+h5{
+    font-size: 1.8rem;
+}
 
 .card{
     background-color: rgba(255, 255, 255, 0.911);
     text-align: center;
+    font-size: 2.3rem;
+    letter-spacing: 0.3mm;
 }
 
 .jumbotron{
     background-color: transparent;
 }
-/* h1{
-    font-family: 'Luckiest Guy', cursive;
-} */
 
 #upcoming-display{
     display: flex;
@@ -41,4 +47,7 @@ aside{
 .card2{
     background-color:rgba(255, 255, 255, 0.966);
     text-align: center;
+    font-size: 1rem;
+    letter-spacing: 0.3mm;
+    color: rgba(0, 0, 0, 0.699);
 }

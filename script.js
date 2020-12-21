@@ -1,12 +1,10 @@
-// 16 day:
-// var queryURL = "https://api.openweathermap.org/data/2.5/forecast/daily?q=" + searchInput + "&cnt=6&appid=f4aa00bd0357d60904e18da5d680e490&units=imperial"
 
-$("#search-button").on("click", function(){
+$("button").on("click", function(){
     // console.log(this);
     event.preventDefault()
     var searchInput = $("#search-input").val()
-    console.log(searchInput)
-
+    // console.log(searchInput)
+    newButton = searchInput;
     var newButton = $("<button>").addClass("btn")
     newButton.addClass("btn-secondary").text(searchInput);
     $("#past-search-buttons").prepend(newButton);
@@ -25,7 +23,8 @@ $("#search-button").on("click", function(){
         var humidity = $("<p>").addClass("card-text").text("Humidity: " + response.main.humidity + " %");
         var wind = $("<p>").addClass("card-text").text("Wind: " + response.wind.speed + " MPH");
         var img = $("<img>").attr("src", "http://openweathermap.org/img/w/" + response.weather[0].icon + ".png");
-        var cardBody = $("<div>").addClass("card-body");
+        img.attr("alt", "weather icon")
+        var cardBody = $("<div>").addClass("card-body-2");
         city.append(img);
         cardBody.append(city, temp, humidity, wind);
         card.append(cardBody);
@@ -40,14 +39,15 @@ $("#search-button").on("click", function(){
         method: "GET"
     })
     .then(function(response){
-        console.log(response);
+        // console.log(response);
         for(var i = 0; i<response.list.length; i++){
             if(response.list[i].dt_txt.indexOf("12:00:00")!== -1){
                 var card = $("<div>").addClass("card2");
                 var date = $("<h6>").addClass("card2").text(response.list[i].dt_txt)
                 // var img = $("<img>").attr("src", "http://openweathermap.org/img/w/" + response.list[i].weather.icon + ".png");
-                var temp = $("<p>").addClass("card-text").text("Temp: " + response.list[i].main.temp + " F");
-                var humidity = $("<p>").addClass("card-text").text("Humidity: " + response.list[i].main.humidity + "%");
+                // img.attr("alt", "weather icon")
+                var temp = $("<p>").addClass("card-text2").text("Temp: " + response.list[i].main.temp + " F");
+                var humidity = $("<p>").addClass("card-text2").text("Humidity: " + response.list[i].main.humidity + "%");
                 var cardBody = $("<div>").addClass("card-body");
                 var col = $("<div>").addClass("col-md-2");
                 cardBody.append(date, temp, humidity);
@@ -68,7 +68,7 @@ $("#search-button").on("click", function(){
     .then(function(response){
         // console.log(response);
         var uvIndex = $("<p>").addClass("card-text").text("UV Index: " + response.value);
-        $(".card-body").append(uvIndex);
+        $(".card-body-2").append(uvIndex);
     });
 
 });
