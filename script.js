@@ -21,7 +21,8 @@ $("button").on("click", function(){
     // once ajax call returns info, html elements are dynamically created with new class info and text from api 
     .then(function(response){
         var card = $("<div>").addClass("card")
-        var city = $("<h1>").addClass("card-text").text(response.name)
+        var headLine = $("<h1>").addClass("card-text").text("Today's Weather:")
+        var city = $("<h2>").addClass("card-text").text(response.name)
         var temp = $("<p>").addClass("card-text").text("Temperature: " + response.main.temp + " F");
         var humidity = $("<p>").addClass("card-text").text("Humidity: " + response.main.humidity + " %");
         var wind = $("<p>").addClass("card-text").text("Wind: " + response.wind.speed + " MPH");
@@ -29,7 +30,7 @@ $("button").on("click", function(){
         img.attr("alt", "weather icon")
         var cardBody = $("<div>").addClass("card-body-2");
         city.append(img);
-        cardBody.append(city, temp, humidity, wind);
+        cardBody.append(headLine, city, temp, humidity, wind);
         card.append(cardBody);
         $(".jumbotron").append(card);
     })
