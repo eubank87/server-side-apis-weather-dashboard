@@ -1,22 +1,25 @@
 
+// on click event that reads search input for api calls & creates new buttons for past searches.
+// TODO: save past searches in local storage
 $("button").on("click", function(){
-    // console.log(this);
+    // create variable to read search input as a value to use in api search
     event.preventDefault()
     var searchInput = $("#search-input").val()
-    // console.log(searchInput)
-    newButton = searchInput;
+    localStorage.setItem("city", searchInput)
+
+    // dynamically creating new button in html with same class as hard coded btn
     var newButton = $("<button>").addClass("btn")
     newButton.addClass("btn-secondary").text(searchInput);
     $("#past-search-buttons").prepend(newButton);
 
+    // first url used for current weather info
     var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + searchInput + "&appid=f4aa00bd0357d60904e18da5d680e490&units=imperial";
     $.ajax({
         url: queryURL,
         method: "GET"
     })
-    // then today's weather is displayed on the jumbotron
+    // once ajax call returns info, html elements are dynamically created with new class info and text from api 
     .then(function(response){
-        // console.log(response);
         var card = $("<div>").addClass("card")
         var city = $("<h1>").addClass("card-text").text(response.name)
         var temp = $("<p>").addClass("card-text").text("Temperature: " + response.main.temp + " F");
@@ -30,52 +33,45 @@ $("button").on("click", function(){
         card.append(cardBody);
         $(".jumbotron").append(card);
     })
-
+    // empty contents of jumbotron so new search does not stack 
     $(".jumbotron").empty();
 
+    // second ajax call for 5 day forecast
     var queryURL2 = "https://api.openweathermap.org/data/2.5/forecast?q=" + searchInput + "&appid=f4aa00bd0357d60904e18da5d680e490&units=imperial"
     $.ajax({
         url: queryURL2,
         method: "GET"
     })
     .then(function(response){
-        // console.log(response);
+        // created for loop to run through array of 5 day forecast and only pull/print info from 12:00pm
         for(var i = 0; i<response.list.length; i++){
             if(response.list[i].dt_txt.indexOf("12:00:00")!== -1){
                 var card = $("<div>").addClass("card2");
                 var date = $("<h6>").addClass("card2").text(response.list[i].dt_txt)
-                // var img = $("<img>").attr("src", "http://openweathermap.org/img/w/" + response.list[i].weather.icon + ".png");
-                // img.attr("alt", "weather icon")
+                var img = $("<img>").attr("src", "https://openweathermap.org/img/wn/" + response.list[i].weather.icon + ".png");
+                img.attr("alt", "weather icon")
                 var temp = $("<p>").addClass("card-text2").text("Temp: " + response.list[i].main.temp + " F");
                 var humidity = $("<p>").addClass("card-text2").text("Humidity: " + response.list[i].main.humidity + "%");
                 var cardBody = $("<div>").addClass("card-body");
                 var col = $("<div>").addClass("col-md-2");
-                cardBody.append(date, temp, humidity);
+                cardBody.append(date, temp, img, humidity);
                 card.append(cardBody);
                 col.append(card)
                 $("#upcoming-display").append(col);
             }
         }
     })
-
+    // empty contents of 5 day cards in bewteen searches
     $("#upcoming-display").empty();
 
+    // third api call for uv index- currently using hard coded lat/lon. TODO: Need to figure out a way to change input
     var queryURL3 = "https://api.openweathermap.org/data/2.5/uvi?lat=47.61&lon=-122.33&appid=f4aa00bd0357d60904e18da5d680e490"
     $.ajax({
         url: queryURL3,
         method: "GET"
     })
     .then(function(response){
-        // console.log(response);
         var uvIndex = $("<p>").addClass("card-text").text("UV Index: " + response.value);
         $(".card-body-2").append(uvIndex);
     });
-
 });
-
-// 2 more ajax calls, uv index & 5 day forecast
-// uv index call done based on lattitude/longtitude. Use starting poit(Seattle) to get reference for lat/long
-// take out hard coded forecast in html, leave empty div for dynamilcally built html pieces of cards
-// in the 5 day forecast call, target specific times of day
-// when a new search is performed, the data from the current search is stored locally
-// new search results dispplay on jumbotron/cards
