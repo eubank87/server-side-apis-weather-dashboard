@@ -1,16 +1,18 @@
 
 // on click event that reads search input for api calls & creates new buttons for past searches.
-// TODO: save past searches in local storage
 $("button").on("click", function(){
     // create variable to read search input as a value to use in api search
     event.preventDefault()
     var searchInput = $("#search-input").val()
+    // search input is saved as "city" in local storage
     localStorage.setItem("city", searchInput)
 
     // dynamically creating new button in html with same class as hard coded btn
     var newButton = $("<button>").addClass("btn")
     newButton.addClass("btn-secondary").text(searchInput);
+    newButton.innerHTML = localStorage.getItem("city");
     $("#past-search-buttons").prepend(newButton);
+    console.log(newButton)
 
     // first url used for current weather info
     var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + searchInput + "&appid=f4aa00bd0357d60904e18da5d680e490&units=imperial";
@@ -44,12 +46,17 @@ $("button").on("click", function(){
         method: "GET"
     })
     .then(function(response){
+        var headCard = $("<div>").addClass("card3")
+        var headLine2 = $("<h1>").addClass("card-text").text("5 Day Forecast:")
+        headCard.append(headLine2)
+        $("#upcoming-headline").prepend(headCard);
         // created for loop to run through array of 5 day forecast and only pull/print info from 12:00pm
         for(var i = 0; i<response.list.length; i++){
             if(response.list[i].dt_txt.indexOf("12:00:00")!== -1){
+                // console.log(response);
                 var card = $("<div>").addClass("card2");
                 var date = $("<h6>").addClass("card2").text(response.list[i].dt_txt)
-                var img = $("<img>").attr("src", "https://openweathermap.org/img/wn/" + response.list[i].weather.icon + ".png");
+                var img = $("<img>").attr("src", "https://openweathermap.org/img/wn/" + response.list[i].weather[0].icon + ".png");
                 img.attr("alt", "weather icon")
                 var temp = $("<p>").addClass("card-text2").text("Temp: " + response.list[i].main.temp + " F");
                 var humidity = $("<p>").addClass("card-text2").text("Humidity: " + response.list[i].main.humidity + "%");
@@ -64,6 +71,7 @@ $("button").on("click", function(){
     })
     // empty contents of 5 day cards in bewteen searches
     $("#upcoming-display").empty();
+    $("#upcoming-headline").empty();
 
     // third api call for uv index- currently using hard coded lat/lon. TODO: Need to figure out a way to change input
     var queryURL3 = "https://api.openweathermap.org/data/2.5/uvi?lat=47.61&lon=-122.33&appid=f4aa00bd0357d60904e18da5d680e490"

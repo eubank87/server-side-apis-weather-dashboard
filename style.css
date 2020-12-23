@@ -49,10 +49,19 @@ h2{
     justify-content: space-between;
 }
 
-.card2{
+.card2, .card3{
     background-color:rgba(255, 255, 255, 0.966);
     text-align: center;
     font-size: 1rem;
     letter-spacing: 0.3mm;
     color: rgba(0, 0, 0, 0.699);
+}
+.card2{
+    margin-bottom: 10%;
+}
+
+.card3{
+    margin-bottom: 3%;
+    width: 100vw;
+    padding-top: 2%;
 }
