@@ -81,6 +81,13 @@ $("button").on("click", function(){
     })
     .then(function(response){
         var uvIndex = $("<p>").addClass("card-text").text("UV Index: " + response.value);
+        if(response.value <= 2){
+            uvIndex.addClass("low");
+        } else if(response.value > 2 && response.value <= 7){
+            uvIndex.addClass("moderate")
+        } else{
+            uvIndex.addClass("high")
+        }
         $(".card-body-2").append(uvIndex);
     });
 });
